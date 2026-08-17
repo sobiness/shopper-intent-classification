@@ -99,7 +99,9 @@ shopper-intent-classification/
     ├── pipelines.py                # preprocessing + the six estimators
     ├── metrics.py                  # the six evaluation metrics
     ├── train_models.py             # training entry point
+    ├── threshold_analysis.py       # follow-up: threshold sweep and ceiling check
     ├── training_results.json       # every number quoted in this README
+    ├── tuning_results.json         # output of threshold_analysis.py
     ├── logistic_regression.joblib
     ├── decision_tree.joblib
     ├── knn.joblib
@@ -164,6 +166,41 @@ The Support Vector Machine is included as a sixth model because the brief refers
 A single feature, `PageValues`, carries roughly a third of the total importance — more than four times the next strongest. That concentration explains much of the results table: one dominant, monotone predictor is exactly the structure tree ensembles exploit best, and it is also why even weak models clear the baseline on accuracy.
 
 It is worth being sceptical about that feature, though. `PageValues` is a Google Analytics metric derived in part from pages that preceded conversions, so it is partially downstream of the very outcome being predicted. The 0.9175 AUC should be read as "this dataset is predictable" rather than "these features cause purchases."
+
+### Is 0.8974 accuracy low? No — but the recall is
+
+An obvious question about the table above is whether ~90% accuracy is a weak result. It is not: it is close to the ceiling for this dataset. Reproduce with `python -m model.threshold_analysis`.
+
+| Reference point | Accuracy | AUC | F1 |
+|---|---|---|---|
+| Gradient boosting (stronger algorithm, for comparison only) | 0.8974 | 0.9258 | 0.6411 |
+| **Our Random Forest** | **0.8974** | 0.9175 | 0.5990 |
+| Published result — Sakar et al. (2019), MLP/LSTM | 0.8724 | — | 0.58 |
+
+A `HistGradientBoostingClassifier` — a substantially more powerful algorithm than anything required here — reaches the *same* 0.8974 accuracy, improving only AUC and F1. When a much stronger model cannot move a number, that number is a property of the data rather than of the model. The result is also 2.5 points above the accuracy published by the authors who released the dataset.
+
+What *is* weak is **recall of 0.4948**. The error breakdown shows why accuracy hides it:
+
+| | Predicted: No Purchase | Predicted: Purchase |
+|---|---|---|
+| **Actual: No Purchase** | 2,024 | 60 |
+| **Actual: Purchase** | **193** | 189 |
+
+Only 253 of 2,466 sessions are misclassified (10.26%), but **193 of those 253 errors — 76% — are missed purchases**. The model catches barely half the buyers, and accuracy conceals this because 193 mistakes are a small fraction of a mostly-negative test set. This is the concrete reason the assignment asks for six metrics: accuracy and recall disagree sharply here, and only one of them reflects what the retailer cares about.
+
+Crucially, this is an artefact of the **0.50 decision threshold**, not a limitation of what the model learned. Sweeping the threshold on the *already-fitted* Random Forest, with no refitting:
+
+| Threshold | Accuracy | F1 | MCC |
+|---|---|---|---|
+| 0.30 | 0.8812 | 0.6549 | 0.5883 |
+| **0.35** | 0.8929 | **0.6658** | **0.6026** |
+| 0.45 | **0.9006** | 0.6402 | 0.5895 |
+| 0.50 _(default, reported above)_ | 0.8974 | 0.5990 | 0.5596 |
+| 0.70 | 0.8767 | 0.3532 | 0.4191 |
+
+Moving the threshold from 0.50 to 0.35 lifts F1 from 0.5990 to 0.6658 and MCC from 0.5596 to 0.6026 while costing 0.45 points of accuracy. Refitting with `class_weight="balanced"` achieves something similar by a different route — recall 0.4948 → 0.7016, F1 0.6625, MCC 0.5979, at 0.8893 accuracy.
+
+Both are improvements on the submitted configuration, and both were deliberately left out of the main comparison table. The six models are reported at near-default settings so that they remain comparable to one another and so that the imbalance problem stays visible; tuning only the winner would have made the table an unfair fight. The honest summary is that **0.50 is the wrong operating point for a problem with 15.5% positives**, and the app's threshold slider exists so that trade-off can be explored rather than buried in a footnote.
 
 ---
 
