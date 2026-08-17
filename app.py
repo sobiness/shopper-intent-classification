@@ -158,7 +158,7 @@ def plot_confusion(matrix: pd.DataFrame) -> plt.Figure:
         cbar=False,
         linewidths=1.2,
         linecolor="white",
-        annot_kws={"size": 13, "weight": 600},
+        annot_kws={"size": 13, "weight": "bold"},
         ax=axis,
     )
     axis.set_xticklabels(["No Purchase", "Purchase"])
