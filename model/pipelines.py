@@ -22,22 +22,30 @@ from sklearn.tree import DecisionTreeClassifier
 from .config import CATEGORICAL_FEATURES, NUMERIC_FEATURES, RANDOM_STATE
 
 
+def _dense_one_hot() -> OneHotEncoder:
+    """Dense one-hot encoder, tolerant of the pre-1.2 keyword name.
+
+    Dense output is required because GaussianNB cannot consume a sparse matrix.
+    scikit-learn renamed ``sparse`` to ``sparse_output`` in 1.2; accepting both
+    keeps the training notebook runnable on lab machines with an older install.
+    """
+    try:
+        return OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+    except TypeError:
+        return OneHotEncoder(handle_unknown="ignore", sparse=False)
+
+
 def build_preprocessor() -> ColumnTransformer:
     """Scale the numeric columns, one-hot the nominal ones.
 
-    ``sparse_output=False`` is required because GaussianNB cannot consume a
-    sparse matrix. ``handle_unknown="ignore"`` means an uploaded CSV containing
-    a category level absent from the training split degrades to an all-zero
-    dummy block instead of raising.
+    ``handle_unknown="ignore"`` means an uploaded CSV containing a category level
+    absent from the training split degrades to an all-zero dummy block instead of
+    raising.
     """
     return ColumnTransformer(
         transformers=[
             ("numeric", StandardScaler(), NUMERIC_FEATURES),
-            (
-                "categorical",
-                OneHotEncoder(handle_unknown="ignore", sparse_output=False),
-                CATEGORICAL_FEATURES,
-            ),
+            ("categorical", _dense_one_hot(), CATEGORICAL_FEATURES),
         ],
         remainder="drop",
     )
