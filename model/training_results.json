@@ -22,7 +22,7 @@
       "MCC": 0.45916112644753304,
       "TrainAccuracy": 0.8861516626115167,
       "OverfitGap": 0.005373073803730755,
-      "FitSeconds": 0.029
+      "FitSeconds": 0.03
     },
     "Decision Tree": {
       "Accuracy": 0.862124898621249,
@@ -33,7 +33,7 @@
       "MCC": 0.477901195404236,
       "TrainAccuracy": 1.0,
       "OverfitGap": 0.13787510137875103,
-      "FitSeconds": 0.052
+      "FitSeconds": 0.053
     },
     "kNN": {
       "Accuracy": 0.8767234387672344,
@@ -55,18 +55,18 @@
       "MCC": 0.12888401296020927,
       "TrainAccuracy": 0.2911597729115977,
       "OverfitGap": 0.01824817518248173,
-      "FitSeconds": 0.012
+      "FitSeconds": 0.014
     },
     "Random Forest (Ensemble)": {
-      "Accuracy": 0.8969991889699919,
+      "Accuracy": 0.897404703974047,
       "AUC": 0.9175040950246708,
-      "Precision": 0.7601626016260162,
-      "Recall": 0.4895287958115183,
-      "F1": 0.5955414012738853,
-      "MCC": 0.5568556236834212,
+      "Precision": 0.7590361445783133,
+      "Recall": 0.49476439790575916,
+      "F1": 0.5990491283676703,
+      "MCC": 0.5595763370218448,
       "TrainAccuracy": 1.0,
-      "OverfitGap": 0.10300081103000813,
-      "FitSeconds": 0.356
+      "OverfitGap": 0.10259529602595296,
+      "FitSeconds": 0.367
     },
     "Support Vector Machine": {
       "Accuracy": 0.8876723438767234,
@@ -77,7 +77,7 @@
       "MCC": 0.5099472532123677,
       "TrainAccuracy": 0.9081508515815085,
       "OverfitGap": 0.0204785077047851,
-      "FitSeconds": 4.0
+      "FitSeconds": 4.1
     }
   },
   "correlations": {

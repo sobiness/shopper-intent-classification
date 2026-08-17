@@ -19,6 +19,20 @@ from sklearn.metrics import (
 # Order matches the comparison table in the assignment brief.
 METRIC_ORDER = ["Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]
 
+DEFAULT_THRESHOLD = 0.5
+
+
+def labels_from_proba(y_proba, threshold: float = DEFAULT_THRESHOLD) -> np.ndarray:
+    """Turn positive-class probabilities into 0/1 labels.
+
+    Every label in this project comes from here rather than from
+    ``estimator.predict``, so the README table and the app's threshold slider at
+    0.50 cannot drift apart. They otherwise would: the Random Forest scores a
+    handful of sessions at exactly 0.50, where ``predict`` breaks the tie toward
+    the negative class and a ``>=`` rule breaks it toward the positive one.
+    """
+    return (np.asarray(y_proba) >= threshold).astype(int)
+
 
 def score_predictions(y_true, y_pred, y_proba) -> dict:
     """Compute all six metrics.
@@ -38,16 +52,17 @@ def score_predictions(y_true, y_pred, y_proba) -> dict:
     }
 
 
-def predict_with_proba(pipeline, X) -> tuple[np.ndarray, np.ndarray]:
-    """Return hard labels and positive-class probabilities for a fitted pipeline."""
-    y_pred = pipeline.predict(X)
+def predict_with_proba(
+    pipeline, X, threshold: float = DEFAULT_THRESHOLD
+) -> tuple[np.ndarray, np.ndarray]:
+    """Return thresholded labels and positive-class probabilities."""
     y_proba = pipeline.predict_proba(X)[:, 1]
-    return y_pred, y_proba
+    return labels_from_proba(y_proba, threshold), y_proba
 
 
-def score_model(pipeline, X, y_true) -> dict:
+def score_model(pipeline, X, y_true, threshold: float = DEFAULT_THRESHOLD) -> dict:
     """Fitted pipeline plus a feature frame and labels -> the six metrics."""
-    y_pred, y_proba = predict_with_proba(pipeline, X)
+    y_pred, y_proba = predict_with_proba(pipeline, X, threshold)
     return score_predictions(y_true, y_pred, y_proba)
 
 

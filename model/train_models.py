@@ -21,7 +21,12 @@ from sklearn.metrics import accuracy_score
 
 from .config import MODEL_DIR, MODEL_FILENAMES, RESULTS_FILE, TARGET
 from .data import export_test_data, load_raw, make_split
-from .metrics import METRIC_ORDER, majority_baseline_accuracy, score_model
+from .metrics import (
+    METRIC_ORDER,
+    majority_baseline_accuracy,
+    predict_with_proba,
+    score_model,
+)
 from .pipelines import build_pipelines
 
 # Pairs where a page-count column and its dwell-time column measure the same
@@ -90,7 +95,8 @@ def train_all() -> dict:
         fit_seconds = time.perf_counter() - started
 
         scores = score_model(pipeline, X_test, y_test)
-        train_accuracy = accuracy_score(y_train, pipeline.predict(X_train))
+        train_labels, _ = predict_with_proba(pipeline, X_train)
+        train_accuracy = accuracy_score(y_train, train_labels)
 
         results[name] = {
             **scores,

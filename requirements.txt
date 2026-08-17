@@ -1,0 +1,11 @@
+# Pinned to the exact versions the models in model/*.joblib were fitted with.
+# A pickled scikit-learn pipeline is not guaranteed to load under a different
+# scikit-learn version, so an unpinned install is a deployment failure waiting
+# to happen. Regenerate the pickles if you change these.
+streamlit==1.61.1
+scikit-learn==1.9.0
+pandas==3.0.5
+numpy==2.5.2
+matplotlib==3.11.1
+seaborn==0.13.2
+joblib==1.5.3
