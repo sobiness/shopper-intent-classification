@@ -1,0 +1,107 @@
+{
+  "dataset": {
+    "n_rows": 12330,
+    "n_columns": 18,
+    "n_features": 17,
+    "missing_values": 0,
+    "positive_rate_full": 0.15474452554744525,
+    "positive_rate_train": 0.15470397404703973,
+    "positive_rate_test": 0.1549067315490673,
+    "n_train": 9864,
+    "n_test": 2466,
+    "majority_baseline_accuracy": 0.8450932684509327
+  },
+  "n_features_after_encoding": 75,
+  "metrics": {
+    "Logistic Regression": {
+      "Accuracy": 0.8807785888077859,
+      "AUC": 0.8827868275869,
+      "Precision": 0.7365591397849462,
+      "Recall": 0.3586387434554974,
+      "F1": 0.4823943661971831,
+      "MCC": 0.45916112644753304,
+      "TrainAccuracy": 0.8861516626115167,
+      "OverfitGap": 0.005373073803730755,
+      "FitSeconds": 0.029
+    },
+    "Decision Tree": {
+      "Accuracy": 0.862124898621249,
+      "AUC": 0.7409758720141492,
+      "Precision": 0.5538461538461539,
+      "Recall": 0.5654450261780105,
+      "F1": 0.5595854922279793,
+      "MCC": 0.477901195404236,
+      "TrainAccuracy": 1.0,
+      "OverfitGap": 0.13787510137875103,
+      "FitSeconds": 0.052
+    },
+    "kNN": {
+      "Accuracy": 0.8767234387672344,
+      "AUC": 0.7632579564068294,
+      "Precision": 0.6822429906542056,
+      "Recall": 0.38219895287958117,
+      "F1": 0.4899328859060403,
+      "MCC": 0.44928597427404876,
+      "TrainAccuracy": 0.902676399026764,
+      "OverfitGap": 0.025952960259529645,
+      "FitSeconds": 0.009
+    },
+    "Naive Bayes": {
+      "Accuracy": 0.272911597729116,
+      "AUC": 0.7334051009436142,
+      "Precision": 0.1726218097447796,
+      "Recall": 0.9738219895287958,
+      "F1": 0.29325975561687034,
+      "MCC": 0.12888401296020927,
+      "TrainAccuracy": 0.2911597729115977,
+      "OverfitGap": 0.01824817518248173,
+      "FitSeconds": 0.012
+    },
+    "Random Forest (Ensemble)": {
+      "Accuracy": 0.8969991889699919,
+      "AUC": 0.9175040950246708,
+      "Precision": 0.7601626016260162,
+      "Recall": 0.4895287958115183,
+      "F1": 0.5955414012738853,
+      "MCC": 0.5568556236834212,
+      "TrainAccuracy": 1.0,
+      "OverfitGap": 0.10300081103000813,
+      "FitSeconds": 0.356
+    },
+    "Support Vector Machine": {
+      "Accuracy": 0.8876723438767234,
+      "AUC": 0.882368532122077,
+      "Precision": 0.723404255319149,
+      "Recall": 0.44502617801047123,
+      "F1": 0.5510534846029174,
+      "MCC": 0.5099472532123677,
+      "TrainAccuracy": 0.9081508515815085,
+      "OverfitGap": 0.0204785077047851,
+      "FitSeconds": 4.0
+    }
+  },
+  "correlations": {
+    "Administrative vs Administrative_Duration": 0.6015833421250232,
+    "Informational vs Informational_Duration": 0.618954861781457,
+    "ProductRelated vs ProductRelated_Duration": 0.8609268361763696,
+    "BounceRates vs ExitRates": 0.9130043961815202
+  },
+  "random_forest_top_features": {
+    "numeric__PageValues": 0.3278906260903363,
+    "numeric__ProductRelated_Duration": 0.07946246728149152,
+    "numeric__ExitRates": 0.07945430631404106,
+    "numeric__ProductRelated": 0.0707182503309647,
+    "numeric__Administrative_Duration": 0.054281691484881246,
+    "numeric__BounceRates": 0.0505280307228382,
+    "numeric__Administrative": 0.041568310525699786,
+    "numeric__Informational_Duration": 0.02598827082834287,
+    "numeric__Informational": 0.01883356086016628,
+    "categorical__Month_Nov": 0.018515919910359564
+  },
+  "environment": {
+    "python": "3.12.11",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.2"
+  }
+}
