@@ -6,7 +6,7 @@ Six classifiers predict whether an e-commerce browsing session ends in a purchas
 
 | | |
 |---|---|
-| **Live Streamlit app** | _paste the Community Cloud URL here after deploying_ |
+| **Live Streamlit app** | https://shopper-intent-classification-zr8yisryvlxgf48ccvbbm6.streamlit.app |
 | **GitHub repository** | https://github.com/sobiness/shopper-intent-classification |
 | **Dataset** | [UCI ML Repository — Online Shoppers Purchasing Intention](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset) |
 

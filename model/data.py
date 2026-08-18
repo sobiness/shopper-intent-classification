@@ -1,5 +1,9 @@
 """Loading, target coercion and the stratified train/test split."""
 
+# Keeps the builtin-generic annotations below importable on Python 3.8, which
+# some lab environments still run.
+from __future__ import annotations
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split

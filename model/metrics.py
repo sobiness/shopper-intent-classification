@@ -4,6 +4,10 @@ Kept in one place so the numbers the Streamlit app shows for an uploaded CSV are
 produced by exactly the same code that produced the README comparison table.
 """
 
+# Keeps the builtin-generic annotations below importable on Python 3.8, which
+# some lab environments still run.
+from __future__ import annotations
+
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (

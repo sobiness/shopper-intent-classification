@@ -4,3 +4,6 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints/
 .jupyter-tmp/
+bits-elab-shopper-intent.zip
+.lab-bundle/
+.lab-verify/
